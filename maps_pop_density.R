@@ -1,8 +1,17 @@
 # MAP 1: Basic overview
+# I want uniform colors for each landscape category
+landscape_colors <- c(
+  "Exurban" = "#c5e8b7",
+  "Suburban Low" = "#abe098",
+  "Suburban High" = "#83d475",
+  "Urban Low" = "#57c84d",
+  "Urban High" = "#2eb62c")
+
+# basic plot depicting landscapes
 library(ggplot2)
 ggplot(denver_pop_tract) +
   geom_sf(aes(fill = landscape), color = NA) +
-  scale_fill_brewer(palette = "Set4") +
+  scale_fill_manual(values = landscape_colors) +
   labs(
     title = "Landscape Classification of Denver MSA",
     fill = "Landscape Type"
@@ -24,11 +33,23 @@ denver_pop_tract <- denver_pop_tract %>%
   left_join(denver_med_income, by = "GEOID")
 
 # graph
-ggplot(denver_pop_tract, aes(x = landscape, y = estimate)) +
+ggplot(denver_pop_tract, aes(x = landscape, y = estimate, fill = landscape)) +
   geom_boxplot() +
+  scale_fill_manual(values = landscape_colors) +
   labs(
-    title = "Median Household Income by Landscape",
+    title = "Median Household Income by Landscape (Population Density) Type",
     x = "Landscape Type",
     y = "Median Income"
+  ) +
+  theme_minimal()
+
+
+# MAP 2
+ggplot(denver_pop_tract) +
+  geom_sf(aes(fill = estimate), color = NA) +
+  scale_fill_viridis_c(option = "mako", direction = -1) +
+  labs(
+    title = "Median Household Income in Denver MSA",
+    fill = "Income"
   ) +
   theme_minimal()
