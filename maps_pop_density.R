@@ -53,3 +53,8 @@ ggplot(denver_pop_tract) +
     fill = "Income"
   ) +
   theme_minimal()
+
+
+ggsave("basicmap.png", width = 16, height = 8)
+ggsave("incomemap.png", width = 16, height = 8)
+ggsave("incomeboxplot", width = 16, height = 8)
